@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { X, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
@@ -158,9 +159,13 @@ function ProjectCard({ project, index, onOpen }: { project: Project; index: numb
       {/* Image */}
       <div className="aspect-[4/3] w-full overflow-hidden">
         {!imgError ? (
-          <img
+          <Image
             src={project.image}
             alt={project.title}
+            width={800}
+            height={600}
+            sizes="(max-width: 768px) 100vw, (max-width: 2560px) 50vw, 3840px"
+            quality={95}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             onError={() => setImgError(true)}
           />
@@ -338,9 +343,13 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                   i === currentImage ? 'border-electric opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
                 }`}
               >
-                <img
+                <Image
                   src={img}
                   alt={`Thumbnail ${i + 1}`}
+                  width={64}
+                  height={48}
+                  sizes="64px"
+                  quality={85}
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';

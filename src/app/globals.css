@@ -175,8 +175,8 @@
 }
 
 .fluid-blob-1 {
-  width: 600px;
-  height: 600px;
+  width: min(600px, 40vw);
+  height: min(600px, 40vw);
   top: -10%;
   left: -5%;
   background: radial-gradient(circle, rgba(243, 239, 237, 0.6) 0%, transparent 70%);
@@ -184,8 +184,8 @@
 }
 
 .fluid-blob-2 {
-  width: 500px;
-  height: 500px;
+  width: min(500px, 35vw);
+  height: min(500px, 35vw);
   bottom: -5%;
   right: -5%;
   background: radial-gradient(circle, rgba(232, 238, 242, 0.5) 0%, transparent 70%);
@@ -193,8 +193,8 @@
 }
 
 .fluid-blob-3 {
-  width: 400px;
-  height: 400px;
+  width: min(400px, 30vw);
+  height: min(400px, 30vw);
   top: 40%;
   left: 50%;
   background: radial-gradient(circle, rgba(245, 245, 243, 0.7) 0%, transparent 70%);
@@ -202,12 +202,40 @@
 }
 
 .fluid-blob-4 {
-  width: 350px;
-  height: 350px;
+  width: min(350px, 25vw);
+  height: min(350px, 25vw);
   top: 60%;
   left: 10%;
   background: radial-gradient(circle, rgba(240, 239, 236, 0.4) 0%, transparent 70%);
   animation: fluid-drift-1 38s ease-in-out infinite reverse;
+}
+
+/* 4K+ screens: scale up fluid blobs proportionally */
+@media (min-width: 2560px) {
+  .fluid-blob-1 {
+    width: min(900px, 35vw);
+    height: min(900px, 35vw);
+    filter: blur(120px);
+  }
+  .fluid-blob-2 {
+    width: min(750px, 30vw);
+    height: min(750px, 30vw);
+    filter: blur(120px);
+  }
+  .fluid-blob-3 {
+    width: min(600px, 25vw);
+    height: min(600px, 25vw);
+    filter: blur(120px);
+  }
+  .fluid-blob-4 {
+    width: min(500px, 20vw);
+    height: min(500px, 20vw);
+    filter: blur(120px);
+  }
+  .fluid-frost {
+    backdrop-filter: blur(180px);
+    -webkit-backdrop-filter: blur(180px);
+  }
 }
 
 .fluid-frost {
