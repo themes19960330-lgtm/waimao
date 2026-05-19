@@ -5,7 +5,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { ArrowDown } from 'lucide-react';
 import gsap from 'gsap';
-import { getRandomQuote, type BilingualQuote } from '@/data/quotes';
+import { brandQuotes } from '@/data/quotes';
+import type { Locale } from '@/data/dictionary';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -45,16 +46,30 @@ const fadeUpBlur = {
   },
 };
 
+/** Strict locale-keyed content — only one language exists at a time */
+interface HeroContent {
+  title: string;
+}
+
+function pickRandomContent(): Record<Locale, HeroContent> {
+  const idx = Math.floor(Math.random() * brandQuotes.length);
+  const q = brandQuotes[idx];
+  return {
+    en: { title: q.en },
+    zh: { title: q.zh },
+  };
+}
+
 export default function Hero() {
   const { dict, locale } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [quote, setQuote] = useState<BilingualQuote | null>(null);
+  const [heroContent, setHeroContent] = useState<Record<Locale, HeroContent> | null>(null);
 
   // Pick a random quote on mount (client-side only to avoid hydration mismatch)
   useEffect(() => {
-    setQuote(getRandomQuote());
+    setHeroContent(pickRandomContent());
   }, []);
 
   // Parallax scroll effects
@@ -75,47 +90,36 @@ export default function Hero() {
     const content = contentRef.current;
     if (!curtain || !content) return;
 
-    // Build a timeline
     const tl = gsap.timeline({
       defaults: { ease: 'power4.inOut' },
     });
 
-    // 1. Curtain drops from top to cover the screen
-    tl.to(curtain, {
-      y: '0%',
-      duration: 1.2,
-    })
-    // 2. Once covered, scroll to #works section
-    .call(() => {
-      document.getElementById('works')?.scrollIntoView({ behavior: 'auto' as ScrollBehavior });
-    })
-    // 3. Curtain rises back up
-    .to(curtain, {
-      y: '-100%',
-      duration: 1.2,
-    })
-    // 4. Clean up
-    .call(() => {
-      gsap.set(curtain, { y: '-100%' });
-    });
+    tl.to(curtain, { y: '0%', duration: 1.2 })
+      .call(() => {
+        document.getElementById('works')?.scrollIntoView({ behavior: 'auto' as ScrollBehavior });
+      })
+      .to(curtain, { y: '-100%', duration: 1.2 })
+      .call(() => {
+        gsap.set(curtain, { y: '-100%' });
+      });
   }, []);
+
+  // Derive the active content from the current locale — strict single source
+  const activeContent = heroContent ? heroContent[locale] : null;
 
   return (
     <section
       ref={sectionRef}
       className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-cream"
     >
-      {/* Curtain overlay — hidden above viewport initially */}
+      {/* Curtain overlay */}
       <div
         ref={curtainRef}
         className="fixed inset-0 z-[300] pointer-events-none"
         style={{ transform: 'translateY(-100%)' }}
       >
-        {/* Main curtain panel */}
         <div className="absolute inset-0 bg-night" />
-        {/* Subtle grain on curtain */}
         <div className="absolute inset-0 bg-grain-dark opacity-30" />
-        {/* Curtain bottom edge glow */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-night/80" />
       </div>
 
@@ -125,8 +129,6 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-cream via-cream to-ivory" />
-
-        {/* Warm gold accent orbs */}
         <motion.div
           className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full"
           style={{ background: 'radial-gradient(circle, rgba(184,159,107,0.05) 0%, transparent 70%)' }}
@@ -141,7 +143,7 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Main content with parallax */}
+      {/* Main content */}
       <motion.div
         ref={contentRef}
         style={{
@@ -162,8 +164,8 @@ export default function Hero() {
           {dict.hero.greeting}
         </motion.p>
 
-        {/* Animated Title — locale-aware single language quote */}
-        {quote && (
+        {/* Title — strictly locale-isolated, only one language renders */}
+        {activeContent && (
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -171,12 +173,11 @@ export default function Hero() {
             className="mb-16"
           >
             {locale === 'en' ? (
-              /* English quote — Playfair Display ultra-bold, clamp-scaled */
               <h1
                 className="font-display font-black text-ink leading-[1.05] tracking-tighter mx-auto"
                 style={{ fontSize: 'clamp(2rem, 8vw, 5rem)' }}
               >
-                {quote.en.split(' ').map((word, wordIndex) => (
+                {activeContent.title.split(' ').map((word, wordIndex) => (
                   <span key={wordIndex} className="inline-block mr-[0.15em]">
                     {word.split('').map((char, charIndex) => (
                       <motion.span
@@ -191,12 +192,11 @@ export default function Hero() {
                 ))}
               </h1>
             ) : (
-              /* Chinese quote — ultra-bold, same visual weight */
               <h1
                 className="font-display font-bold text-electric/85 leading-[1.15] tracking-tighter mx-auto"
                 style={{ fontSize: 'clamp(1.75rem, 7vw, 4rem)' }}
               >
-                {quote.zh.split('').map((char, charIndex) => (
+                {activeContent.title.split('').map((char, charIndex) => (
                   <motion.span
                     key={`zh-${charIndex}`}
                     variants={letterAnimation}
@@ -220,7 +220,7 @@ export default function Hero() {
           {dict.hero.subtitle}
         </motion.p>
 
-        {/* CTA — triggers curtain transition */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
