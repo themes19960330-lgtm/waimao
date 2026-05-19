@@ -170,8 +170,8 @@ export default function Hero() {
             animate="visible"
             className="mb-10"
           >
-            {/* English line */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-semibold text-ink leading-[1.2] mb-4">
+            {/* English line — Playfair Display bold */}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-ink leading-[1.1] mb-4 tracking-tight">
               {quote.en.split(' ').map((word, wordIndex) => (
                 <span key={wordIndex} className="inline-block mr-[0.15em]">
                   {word.split('').map((char, charIndex) => (

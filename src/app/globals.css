@@ -17,7 +17,7 @@
   --color-night-mist: #1A1A1A;
 
   --font-sans: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Cormorant Garamond', 'Source Han Serif SC', 'Songti SC', 'Georgia', serif;
+  --font-display: 'Playfair Display', 'Cormorant Garamond', 'Source Han Serif SC', 'Songti SC', 'Georgia', serif;
 }
 
 @layer base {
@@ -52,22 +52,25 @@
     font-family: var(--font-display);
   }
 
-  /* Strengthen heading presence with clamp() for fluid scaling */
+  /* Strengthen heading presence with Playfair Display bold weight */
   h1 {
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    font-size: clamp(2.5rem, 7vw, 6rem);
   }
 
   h2 {
     font-weight: 600;
-    letter-spacing: -0.01em;
-    font-size: clamp(1.5rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-size: clamp(1.75rem, 4.5vw, 3.5rem);
   }
 
   h3 {
-    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    font-size: clamp(1.35rem, 3.5vw, 2.25rem);
   }
 
   /* Lightweight body text */
