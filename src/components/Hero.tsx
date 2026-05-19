@@ -72,10 +72,10 @@ export default function Hero() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-cream via-cream to-ivory" />
 
-        {/* Electric accent orbs */}
+        {/* Warm gold accent orbs */}
         <motion.div
           className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(0,51,255,0.05) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(184,159,107,0.05) 0%, transparent 70%)' }}
           animate={{ scale: [1, 1.3, 1], x: [0, 20, -20, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
         />
@@ -102,7 +102,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-xs font-semibold uppercase tracking-[0.3em] text-electric/70 mb-8"
+          className="text-xs font-semibold uppercase tracking-[0.3em] text-electric/80 mb-8"
         >
           {dict.hero.greeting}
         </motion.p>
@@ -154,7 +154,7 @@ export default function Hero() {
         >
           <a
             href="#works"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-ink text-cream rounded-full text-sm font-medium tracking-wide hover:bg-electric transition-all duration-500 group"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-ink text-cream rounded-full text-sm font-medium tracking-wide hover:bg-electric hover:text-ink transition-all duration-500 group"
           >
             {dict.hero.cta}
             <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>

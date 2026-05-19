@@ -38,10 +38,10 @@ export default function SplashScreen({ onEnter }: SplashScreenProps) {
         {/* Film grain overlay */}
         <div className="absolute inset-0 bg-grain-dark opacity-50" />
 
-        {/* Subtle electric glow */}
+        {/* Subtle warm gold glow */}
         <motion.div
           className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(0,51,255,0.04) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(184,159,107,0.04) 0%, transparent 70%)' }}
           animate={{
             scale: [1, 1.1, 1],
             opacity: [0.5, 0.8, 0.5],
@@ -76,7 +76,7 @@ export default function SplashScreen({ onEnter }: SplashScreenProps) {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.5, delay: 0.3, ease: [0.76, 0, 0.24, 1] }}
-            className="w-12 h-px bg-electric/50 mx-auto mb-10 origin-center"
+          className="w-12 h-px bg-electric/50 mx-auto mb-10 origin-center"
           />
 
           {/* Brand name */}
@@ -134,7 +134,7 @@ export default function SplashScreen({ onEnter }: SplashScreenProps) {
                 {/* Hover glow */}
                 <motion.div
                   className="absolute inset-0 bg-white/[0.04] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  animate={exiting ? { opacity: 1, backgroundColor: 'rgba(0,51,255,0.15)' } : {}}
+              animate={exiting ? { opacity: 1, backgroundColor: 'rgba(184,159,107,0.15)' } : {}}
                 />
                 <span className="relative z-10 text-xs font-sans font-extralight tracking-[0.3em] uppercase text-white/50 group-hover:text-white/80 transition-colors duration-500">
                   {exiting ? dict.splash.entering : dict.splash.enterBtn}

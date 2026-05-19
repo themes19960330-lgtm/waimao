@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cream: #FBFBFA;
-  --color-ivory: #F5F5F3;
+  --color-cream: #FAF9F6;
+  --color-ivory: #F5F3EE;
   --color-ink: #1A1A1A;
   --color-champagne: #D4C5B9;
   --color-sage: #8F9779;
   --color-charcoal: #2A2A2A;
   --color-stone: #E8E6E1;
   --color-mist: #F0EFEC;
-  --color-electric: #0033FF;
-  --color-electric-light: #3366FF;
-  --color-electric-glow: rgba(0, 51, 255, 0.08);
+  --color-electric: #B89F6B;
+  --color-electric-light: #D9C28E;
+  --color-electric-glow: rgba(184, 159, 107, 0.08);
   --color-night: #0A0A0A;
   --color-night-soft: #141414;
   --color-night-mist: #1A1A1A;
@@ -228,8 +228,8 @@
   background: radial-gradient(
     ellipse at center,
     transparent 40%,
-    rgba(251, 251, 250, 0.3) 70%,
-    rgba(245, 245, 243, 0.6) 100%
+    rgba(250, 249, 246, 0.3) 70%,
+    rgba(245, 243, 238, 0.6) 100%
   );
 }
 

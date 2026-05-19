@@ -15,7 +15,7 @@ export default function Footer() {
             <a href="/" className="flex items-baseline gap-1.5 mb-4">
               <span className="text-lg font-display font-bold tracking-tight text-ink">WAM</span>
               <span className="text-xs font-sans font-light text-ink/40 tracking-widest uppercase">Visuals</span>
-              <span className="text-electric text-lg">.</span>
+          <span className="text-electric text-lg">.</span>
             </a>
             <p className="text-sm text-ink/50 font-light leading-relaxed max-w-xs">
               {dict.splash.tagline}
