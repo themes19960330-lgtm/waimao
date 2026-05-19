@@ -112,7 +112,7 @@ export default function Hero() {
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-ink leading-[1.1] mb-8"
+          className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-ink leading-[1.15] mb-10"
         >
           {titleWords.map((word, wordIndex) => (
             <span key={wordIndex} className="inline-block mr-[0.15em]">
@@ -130,7 +130,7 @@ export default function Hero() {
           <br />
           <motion.span
             variants={letterAnimation}
-            className="inline-block italic text-electric"
+            className="inline-block italic text-electric tracking-[0.04em]"
           >
             Design
           </motion.span>
@@ -141,7 +141,7 @@ export default function Hero() {
           variants={fadeUpBlur}
           initial="hidden"
           animate="visible"
-          className="text-lg md:text-xl text-ink/60 max-w-2xl mx-auto leading-relaxed mb-12 font-light"
+          className="text-xl md:text-2xl text-ink/70 max-w-2xl mx-auto leading-relaxed mb-16 font-light"
         >
           {dict.hero.subtitle}
         </motion.p>
@@ -154,7 +154,7 @@ export default function Hero() {
         >
           <a
             href="#works"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-ink text-cream rounded-full text-sm font-medium tracking-wide hover:bg-electric hover:text-ink transition-all duration-500 group"
+            className="inline-flex items-center gap-3 px-10 py-5 bg-ink text-cream rounded-full text-sm font-semibold tracking-wider hover:bg-electric hover:text-ink transition-all duration-500 group"
           >
             {dict.hero.cta}
             <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
