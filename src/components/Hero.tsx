@@ -150,7 +150,7 @@ export default function Hero() {
           opacity: parallaxOpacity,
           filter: useTransform(blurAmount, (v) => `blur(${v}px)`),
         }}
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 text-center"
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 text-center py-20 lg:py-32"
       >
         {/* Greeting */}
         <motion.p
@@ -170,8 +170,8 @@ export default function Hero() {
             animate="visible"
             className="mb-10"
           >
-            {/* English line — Playfair Display bold */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-ink leading-[1.1] mb-4 tracking-tight">
+            {/* English line — Playfair Display ultra-bold, ultra-scale */}
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-black text-ink leading-[1.05] mb-6 tracking-tighter">
               {quote.en.split(' ').map((word, wordIndex) => (
                 <span key={wordIndex} className="inline-block mr-[0.15em]">
                   {word.split('').map((char, charIndex) => (
@@ -186,8 +186,8 @@ export default function Hero() {
                 </span>
               ))}
             </h1>
-            {/* Chinese line */}
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-light text-electric/70 leading-[1.3] tracking-wide">
+            {/* Chinese line — ultra-bold to match English weight */}
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-electric/80 leading-[1.15] tracking-tighter">
               {quote.zh.split('').map((char, charIndex) => (
                 <motion.span
                   key={`zh-${charIndex}`}
