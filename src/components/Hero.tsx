@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { ArrowDown } from 'lucide-react';
+import gsap from 'gsap';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -46,6 +47,8 @@ const fadeUpBlur = {
 export default function Hero() {
   const { dict } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const titleText = dict.hero.title;
   const titleWords = titleText.split(' ');
 
@@ -60,11 +63,57 @@ export default function Hero() {
   const parallaxOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3]);
   const blurAmount = useTransform(scrollYProgress, [0, 0.8], [0, 4]);
 
+  const handleCurtainTransition = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const curtain = curtainRef.current;
+    const content = contentRef.current;
+    if (!curtain || !content) return;
+
+    // Build a timeline
+    const tl = gsap.timeline({
+      defaults: { ease: 'power4.inOut' },
+    });
+
+    // 1. Curtain drops from top to cover the screen
+    tl.to(curtain, {
+      y: '0%',
+      duration: 1.2,
+    })
+    // 2. Once covered, scroll to #works section
+    .call(() => {
+      document.getElementById('works')?.scrollIntoView({ behavior: 'auto' as ScrollBehavior });
+    })
+    // 3. Curtain rises back up
+    .to(curtain, {
+      y: '-100%',
+      duration: 1.2,
+    })
+    // 4. Clean up
+    .call(() => {
+      gsap.set(curtain, { y: '-100%' });
+    });
+  }, []);
+
   return (
     <section
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream"
     >
+      {/* Curtain overlay — hidden above viewport initially */}
+      <div
+        ref={curtainRef}
+        className="fixed inset-0 z-[300] pointer-events-none"
+        style={{ transform: 'translateY(-100%)' }}
+      >
+        {/* Main curtain panel */}
+        <div className="absolute inset-0 bg-night" />
+        {/* Subtle grain on curtain */}
+        <div className="absolute inset-0 bg-grain-dark opacity-30" />
+        {/* Curtain bottom edge glow */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-night/80" />
+      </div>
+
       {/* Parallax background layer */}
       <motion.div
         style={{ y: useTransform(scrollYProgress, [0, 1], [0, -100]) }}
@@ -89,6 +138,7 @@ export default function Hero() {
 
       {/* Main content with parallax */}
       <motion.div
+        ref={contentRef}
         style={{
           y: parallaxY,
           scale: parallaxScale,
@@ -107,12 +157,12 @@ export default function Hero() {
           {dict.hero.greeting}
         </motion.p>
 
-        {/* Animated Title */}
+        {/* Animated Title — extreme scaling */}
         <motion.h1
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-ink leading-[1.15] mb-10"
+          className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-semibold text-ink leading-[1.1] mb-10 tracking-wider"
         >
           {titleWords.map((word, wordIndex) => (
             <span key={wordIndex} className="inline-block mr-[0.15em]">
@@ -130,7 +180,7 @@ export default function Hero() {
           <br />
           <motion.span
             variants={letterAnimation}
-            className="inline-block italic text-electric tracking-[0.04em]"
+            className="inline-block italic text-electric tracking-[0.06em]"
           >
             Design
           </motion.span>
@@ -146,19 +196,19 @@ export default function Hero() {
           {dict.hero.subtitle}
         </motion.p>
 
-        {/* CTA */}
+        {/* CTA — triggers curtain transition */}
         <motion.div
           initial={{ opacity: 0, y: 30, filter: 'blur(6px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.8, delay: 1.4, ease: [0.76, 0, 0.24, 1] }}
         >
-          <a
-            href="#works"
-            className="inline-flex items-center gap-3 px-10 py-5 bg-ink text-cream rounded-full text-sm font-semibold tracking-wider hover:bg-electric hover:text-ink transition-all duration-500 group"
+          <button
+            onClick={handleCurtainTransition}
+            className="inline-flex items-center gap-3 px-10 py-5 bg-ink text-cream rounded-full text-sm font-semibold tracking-wider hover:bg-electric hover:text-ink transition-all duration-500 group cursor-pointer"
           >
             {dict.hero.cta}
             <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-          </a>
+          </button>
         </motion.div>
 
         {/* Scroll Hint */}

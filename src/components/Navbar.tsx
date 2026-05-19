@@ -56,14 +56,14 @@ export default function Navbar() {
             </a>
           ))}
 
-          {/* Language Toggle */}
+          {/* Language Toggle — Pill UI */}
           <button
             onClick={toggleLocale}
-            className="relative flex items-center gap-2 px-4 py-2 rounded-full border border-ink/15 text-xs font-medium text-ink/70 hover:text-ink hover:border-ink/40 hover:bg-ink/5 transition-all duration-300"
+            className="relative flex items-center gap-2 px-5 py-2 rounded-full border border-white/30 text-xs font-medium text-white/70 hover:text-white hover:border-white/50 hover:bg-white/10 backdrop-blur-md transition-all duration-300"
           >
-            <span className={`transition-colors ${locale === 'en' ? 'text-electric font-semibold' : 'text-ink/40'}`}>EN</span>
-            <span className="text-ink/20">/</span>
-            <span className={`transition-colors ${locale === 'zh' ? 'text-electric font-semibold' : 'text-ink/40'}`}>ZH</span>
+            <span className={`transition-colors ${locale === 'en' ? 'text-electric font-semibold' : 'text-white/40'}`}>EN</span>
+            <span className="text-white/20">/</span>
+            <span className={`transition-colors ${locale === 'zh' ? 'text-electric font-semibold' : 'text-white/40'}`}>ZH</span>
           </button>
         </div>
 
