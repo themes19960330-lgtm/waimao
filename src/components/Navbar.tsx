@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { Menu, X } from 'lucide-react';
@@ -9,6 +9,27 @@ export default function Navbar() {
   const { locale, dict, toggleLocale } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [fading, setFading] = useState(false);
+  const [displayLocale, setDisplayLocale] = useState<'en' | 'zh'>('en');
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleToggle = useCallback(() => {
+    if (fading) return;
+
+    // Step 1: fade out
+    setFading(true);
+
+    timeoutRef.current = setTimeout(() => {
+      // Step 2: switch content
+      toggleLocale();
+      setDisplayLocale((prev) => (prev === 'en' ? 'zh' : 'en'));
+
+      // Step 3: fade back in (next frame)
+      requestAnimationFrame(() => {
+        setFading(false);
+      });
+    }, 200);
+  }, [fading, toggleLocale]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -56,14 +77,27 @@ export default function Navbar() {
             </a>
           ))}
 
-          {/* Language Toggle — Pill UI */}
+          {/* Language Toggle — Pill UI with CSS cross-fade */}
           <button
-            onClick={toggleLocale}
-            className="relative flex items-center gap-2 px-5 py-2 rounded-full border border-white/30 text-xs font-medium text-white/70 hover:text-white hover:border-white/50 hover:bg-white/10 backdrop-blur-md transition-all duration-300"
+            onClick={handleToggle}
+            disabled={fading}
+            className="relative flex items-center gap-2 px-5 py-2 rounded-full border border-white/30 text-xs font-medium backdrop-blur-md transition-all duration-300 hover:text-white hover:border-white/50 hover:bg-white/10 disabled:opacity-60 disabled:cursor-wait"
           >
-            <span className={`transition-colors ${locale === 'en' ? 'text-electric font-semibold' : 'text-white/40'}`}>EN</span>
-            <span className="text-white/20">/</span>
-            <span className={`transition-colors ${locale === 'zh' ? 'text-electric font-semibold' : 'text-white/40'}`}>ZH</span>
+            <span
+              className={`transition-all duration-200 ease-in-out ${
+                fading ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'
+              } ${displayLocale === 'en' ? 'text-electric font-semibold' : 'text-white/40'}`}
+            >
+              EN
+            </span>
+            <span className="text-white/20 select-none transition-opacity duration-200" style={{ opacity: fading ? 0.3 : 1 }}>/</span>
+            <span
+              className={`transition-all duration-200 ease-in-out ${
+                fading ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'
+              } ${displayLocale === 'zh' ? 'text-electric font-semibold' : 'text-white/40'}`}
+            >
+              ZH
+            </span>
           </button>
         </div>
 
