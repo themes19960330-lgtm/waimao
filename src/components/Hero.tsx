@@ -46,7 +46,7 @@ const fadeUpBlur = {
 };
 
 export default function Hero() {
-  const { dict } = useLanguage();
+  const { dict, locale } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -162,42 +162,51 @@ export default function Hero() {
           {dict.hero.greeting}
         </motion.p>
 
-        {/* Animated Title — random bilingual quote */}
+        {/* Animated Title — locale-aware single language quote */}
         {quote && (
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
-            className="mb-10"
+            className="mb-16"
           >
-            {/* English line — Playfair Display ultra-bold, ultra-scale */}
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-black text-ink leading-[1.05] mb-6 tracking-tighter">
-              {quote.en.split(' ').map((word, wordIndex) => (
-                <span key={wordIndex} className="inline-block mr-[0.15em]">
-                  {word.split('').map((char, charIndex) => (
-                    <motion.span
-                      key={`en-${wordIndex}-${charIndex}`}
-                      variants={letterAnimation}
-                      className="inline-block"
-                    >
-                      {char === ' ' ? '\u00A0' : char}
-                    </motion.span>
-                  ))}
-                </span>
-              ))}
-            </h1>
-            {/* Chinese line — ultra-bold to match English weight */}
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-electric/80 leading-[1.15] tracking-tighter">
-              {quote.zh.split('').map((char, charIndex) => (
-                <motion.span
-                  key={`zh-${charIndex}`}
-                  variants={letterAnimation}
-                  className="inline-block"
-                >
-                  {char === ' ' ? '\u00A0' : char}
-                </motion.span>
-              ))}
-            </h2>
+            {locale === 'en' ? (
+              /* English quote — Playfair Display ultra-bold, clamp-scaled */
+              <h1
+                className="font-display font-black text-ink leading-[1.05] tracking-tighter mx-auto"
+                style={{ fontSize: 'clamp(2rem, 8vw, 5rem)' }}
+              >
+                {quote.en.split(' ').map((word, wordIndex) => (
+                  <span key={wordIndex} className="inline-block mr-[0.15em]">
+                    {word.split('').map((char, charIndex) => (
+                      <motion.span
+                        key={`en-${wordIndex}-${charIndex}`}
+                        variants={letterAnimation}
+                        className="inline-block"
+                      >
+                        {char === ' ' ? '\u00A0' : char}
+                      </motion.span>
+                    ))}
+                  </span>
+                ))}
+              </h1>
+            ) : (
+              /* Chinese quote — ultra-bold, same visual weight */
+              <h1
+                className="font-display font-bold text-electric/85 leading-[1.15] tracking-tighter mx-auto"
+                style={{ fontSize: 'clamp(1.75rem, 7vw, 4rem)' }}
+              >
+                {quote.zh.split('').map((char, charIndex) => (
+                  <motion.span
+                    key={`zh-${charIndex}`}
+                    variants={letterAnimation}
+                    className="inline-block"
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
+              </h1>
+            )}
           </motion.div>
         )}
 
