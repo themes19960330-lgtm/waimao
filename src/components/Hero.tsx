@@ -98,7 +98,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream"
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-cream"
     >
       {/* Curtain overlay — hidden above viewport initially */}
       <div

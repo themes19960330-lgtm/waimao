@@ -28,7 +28,7 @@ export default function SplashScreen({ onEnter }: SplashScreenProps) {
   if (!mounted) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] overflow-hidden">
+    <div className="fixed inset-0 z-[100] overflow-hidden" style={{ height: '100dvh' }}>
       {/* Dark splash background */}
       <motion.div
         className="absolute inset-0 bg-night"

@@ -52,21 +52,38 @@
     font-family: var(--font-display);
   }
 
-  /* Strengthen heading presence */
+  /* Strengthen heading presence with clamp() for fluid scaling */
   h1 {
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1.15;
+    font-size: clamp(2rem, 6vw, 5rem);
   }
 
   h2 {
     font-weight: 600;
     letter-spacing: -0.01em;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 3vw, 2rem);
   }
 
   /* Lightweight body text */
   p, li, a, span, input, textarea, button {
     font-weight: 300;
+  }
+
+  /* Dynamic viewport height for mobile safety */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .h-screen {
+    height: 100vh;
+    height: 100dvh;
   }
 }
 
@@ -280,6 +297,18 @@
   animation: dawn-fade-in 2.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
   animation-delay: 1.4s;
   opacity: 0;
+}
+
+/* Retina / high-DPI display enhancements */
+@media (min-resolution: 2dppx) {
+  .fluid-blob {
+    filter: blur(80px) brightness(1.02);
+  }
+
+  .fluid-frost {
+    backdrop-filter: blur(120px) saturate(1.1);
+    -webkit-backdrop-filter: blur(120px) saturate(1.1);
+  }
 }
 
 /* Custom scrollbar */
