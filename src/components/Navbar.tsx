@@ -6,7 +6,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
-  const { locale, dict, toggleLocale } = useLanguage();
+  const { locale, dict, toggleLocale, isTransitioning } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -56,14 +56,35 @@ export default function Navbar() {
             </a>
           ))}
 
-          {/* Language Toggle — Pill UI */}
+          {/* Language Toggle — Pill UI with cross-fade */}
           <button
             onClick={toggleLocale}
-            className="relative flex items-center gap-2 px-5 py-2 rounded-full border border-white/30 text-xs font-medium text-white/70 hover:text-white hover:border-white/50 hover:bg-white/10 backdrop-blur-md transition-all duration-300"
+            disabled={isTransitioning}
+            className="relative flex items-center gap-2 px-5 py-2 rounded-full border border-white/30 text-xs font-medium text-white/70 hover:text-white hover:border-white/50 hover:bg-white/10 backdrop-blur-md transition-all duration-300 disabled:opacity-60 disabled:cursor-wait"
           >
-            <span className={`transition-colors ${locale === 'en' ? 'text-electric font-semibold' : 'text-white/40'}`}>EN</span>
-            <span className="text-white/20">/</span>
-            <span className={`transition-colors ${locale === 'zh' ? 'text-electric font-semibold' : 'text-white/40'}`}>ZH</span>
+            <div className="relative w-[18px] h-[18px] flex items-center justify-center overflow-hidden">
+              <motion.span
+                key={`en-${locale}`}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, ease: [0.76, 0, 0.24, 1] }}
+                className={`${locale === 'en' ? 'text-electric font-semibold' : 'text-white/40'}`}
+              >
+                EN
+              </motion.span>
+            </div>
+            <span className="text-white/20 select-none">/</span>
+            <div className="relative w-[18px] h-[18px] flex items-center justify-center overflow-hidden">
+              <motion.span
+                key={`zh-${locale}`}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, ease: [0.76, 0, 0.24, 1] }}
+                className={`${locale === 'zh' ? 'text-electric font-semibold' : 'text-white/40'}`}
+              >
+                ZH
+              </motion.span>
+            </div>
           </button>
         </div>
 
