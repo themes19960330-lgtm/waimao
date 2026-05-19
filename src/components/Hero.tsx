@@ -121,15 +121,6 @@ export default function Hero() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-cream via-cream to-ivory" />
 
-        {/* Subtle diamond grid texture */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30 Z' fill='none' stroke='%23000' stroke-width='0.5'/%3E%3C/svg%3E")`,
-            backgroundSize: '60px 60px',
-          }}
-        />
-
         {/* Warm gold accent orbs */}
         <motion.div
           className="absolute top-1/3 right-1/4 w-96 h-96 rounded-full"
