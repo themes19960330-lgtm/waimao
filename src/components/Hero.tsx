@@ -141,7 +141,7 @@ export default function Hero() {
           variants={fadeUpBlur}
           initial="hidden"
           animate="visible"
-          className="text-xl md:text-2xl text-ink/70 max-w-2xl mx-auto leading-relaxed mb-16 font-light"
+          className="text-xl md:text-2xl text-ink/80 max-w-2xl mx-auto leading-relaxed mb-16 font-medium"
         >
           {dict.hero.subtitle}
         </motion.p>

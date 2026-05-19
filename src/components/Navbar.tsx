@@ -59,11 +59,11 @@ export default function Navbar() {
           {/* Language Toggle */}
           <button
             onClick={toggleLocale}
-            className="relative flex items-center gap-2 px-3 py-1.5 rounded-full border border-stone text-xs font-medium text-ink/70 hover:text-ink hover:border-electric hover:text-electric transition-all duration-300"
+            className="relative flex items-center gap-2 px-4 py-2 rounded-full border border-ink/15 text-xs font-medium text-ink/70 hover:text-ink hover:border-ink/40 hover:bg-ink/5 transition-all duration-300"
           >
-            <span className={`transition-colors ${locale === 'en' ? 'text-electric' : 'text-ink/40'}`}>EN</span>
-            <span className="text-stone">/</span>
-            <span className={`transition-colors ${locale === 'zh' ? 'text-electric' : 'text-ink/40'}`}>ZH</span>
+            <span className={`transition-colors ${locale === 'en' ? 'text-electric font-semibold' : 'text-ink/40'}`}>EN</span>
+            <span className="text-ink/20">/</span>
+            <span className={`transition-colors ${locale === 'zh' ? 'text-electric font-semibold' : 'text-ink/40'}`}>ZH</span>
           </button>
         </div>
 
