@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FBFBFA;
+  --color-ivory: #F5F5F3;
+  --color-ink: #1A1A1A;
+  --color-champagne: #D4C5B9;
+  --color-sage: #8F9779;
+  --color-charcoal: #2A2A2A;
+  --color-stone: #E8E6E1;
+  --color-mist: #F0EFEC;
+  --color-electric: #0033FF;
+  --color-electric-light: #3366FF;
+  --color-electric-glow: rgba(0, 51, 255, 0.08);
+  --color-night: #0A0A0A;
+  --color-night-soft: #141414;
+  --color-night-mist: #1A1A1A;
+
+  --font-sans: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Cormorant Garamond', 'Source Han Serif SC', 'Songti SC', 'Georgia', serif;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-electric);
+    color: white;
+  }
+
+  /* Chinese serif fallback for headings */
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+
+  /* Lightweight body text */
+  p, li, a, span, input, textarea, button {
+    font-weight: 300;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .transition-ease {
+    transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  .bg-grain-dark {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+  }
+}
+
+/* ===== Text Shimmer Effect ===== */
+@keyframes text-shimmer {
+  0%, 100% {
+    background-position: -200% center;
+  }
+  50% {
+    background-position: 200% center;
+  }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.7) 25%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.7) 75%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: text-shimmer 8s ease-in-out infinite;
+}
+
+/* ===== Fluid Background Animation ===== */
+@keyframes fluid-drift-1 {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  25% {
+    transform: translate(6%, -4%) scale(1.03);
+  }
+  50% {
+    transform: translate(-3%, 7%) scale(0.97);
+  }
+  75% {
+    transform: translate(4%, 3%) scale(1.01);
+  }
+}
+
+@keyframes fluid-drift-2 {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  33% {
+    transform: translate(-7%, 5%) scale(1.05);
+  }
+  66% {
+    transform: translate(3%, -8%) scale(0.95);
+  }
+}
+
+@keyframes fluid-drift-3 {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  20% {
+    transform: translate(8%, 3%) scale(0.93);
+  }
+  40% {
+    transform: translate(-5%, -5%) scale(1.06);
+  }
+  60% {
+    transform: translate(2%, 8%) scale(0.97);
+  }
+  80% {
+    transform: translate(-3%, -2%) scale(1.03);
+  }
+}
+
+.fluid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fluid-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+}
+
+.fluid-blob-1 {
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  left: -5%;
+  background: radial-gradient(circle, rgba(243, 239, 237, 0.6) 0%, transparent 70%);
+  animation: fluid-drift-1 30s ease-in-out infinite;
+}
+
+.fluid-blob-2 {
+  width: 500px;
+  height: 500px;
+  bottom: -5%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(232, 238, 242, 0.5) 0%, transparent 70%);
+  animation: fluid-drift-2 35s ease-in-out infinite;
+}
+
+.fluid-blob-3 {
+  width: 400px;
+  height: 400px;
+  top: 40%;
+  left: 50%;
+  background: radial-gradient(circle, rgba(245, 245, 243, 0.7) 0%, transparent 70%);
+  animation: fluid-drift-3 28s ease-in-out infinite;
+}
+
+.fluid-blob-4 {
+  width: 350px;
+  height: 350px;
+  top: 60%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(240, 239, 236, 0.4) 0%, transparent 70%);
+  animation: fluid-drift-1 38s ease-in-out infinite reverse;
+}
+
+.fluid-frost {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  backdrop-filter: blur(120px);
+  -webkit-backdrop-filter: blur(120px);
+  pointer-events: none;
+}
+
+/* Vignette mask overlay */
+.fluid-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(251, 251, 250, 0.3) 70%,
+    rgba(245, 245, 243, 0.6) 100%
+  );
+}
+
+/* Dawn fluid entrance */
+@keyframes dawn-fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fluid-dawn-1 {
+  animation: dawn-fade-in 2.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.fluid-dawn-2 {
+  animation: dawn-fade-in 2.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.fluid-dawn-3 {
+  animation: dawn-fade-in 2.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation-delay: 1s;
+  opacity: 0;
+}
+
+.fluid-dawn-4 {
+  animation: dawn-fade-in 2.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation-delay: 1.4s;
+  opacity: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-electric);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-electric-light);
+}
