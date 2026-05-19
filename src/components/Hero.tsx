@@ -1,10 +1,11 @@
 'use client';
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
 import { ArrowDown } from 'lucide-react';
 import gsap from 'gsap';
+import { getRandomQuote, type BilingualQuote } from '@/data/quotes';
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -49,8 +50,12 @@ export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const titleText = dict.hero.title;
-  const titleWords = titleText.split(' ');
+  const [quote, setQuote] = useState<BilingualQuote | null>(null);
+
+  // Pick a random quote on mount (client-side only to avoid hydration mismatch)
+  useEffect(() => {
+    setQuote(getRandomQuote());
+  }, []);
 
   // Parallax scroll effects
   const { scrollYProgress } = useScroll({
@@ -157,34 +162,44 @@ export default function Hero() {
           {dict.hero.greeting}
         </motion.p>
 
-        {/* Animated Title — extreme scaling */}
-        <motion.h1
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="text-5xl md:text-7xl lg:text-8xl font-display font-semibold text-ink leading-[1.15] mb-10"
-        >
-          {titleWords.map((word, wordIndex) => (
-            <span key={wordIndex} className="inline-block mr-[0.15em]">
-              {word.split('').map((char, charIndex) => (
+        {/* Animated Title — random bilingual quote */}
+        {quote && (
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="mb-10"
+          >
+            {/* English line */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-semibold text-ink leading-[1.2] mb-4">
+              {quote.en.split(' ').map((word, wordIndex) => (
+                <span key={wordIndex} className="inline-block mr-[0.15em]">
+                  {word.split('').map((char, charIndex) => (
+                    <motion.span
+                      key={`en-${wordIndex}-${charIndex}`}
+                      variants={letterAnimation}
+                      className="inline-block"
+                    >
+                      {char === ' ' ? '\u00A0' : char}
+                    </motion.span>
+                  ))}
+                </span>
+              ))}
+            </h1>
+            {/* Chinese line */}
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-light text-electric/70 leading-[1.3] tracking-wide">
+              {quote.zh.split('').map((char, charIndex) => (
                 <motion.span
-                  key={`${wordIndex}-${charIndex}`}
+                  key={`zh-${charIndex}`}
                   variants={letterAnimation}
                   className="inline-block"
                 >
                   {char === ' ' ? '\u00A0' : char}
                 </motion.span>
               ))}
-            </span>
-          ))}
-          <br />
-          <motion.span
-            variants={letterAnimation}
-            className="inline-block italic text-electric tracking-[0.06em]"
-          >
-            Design
-          </motion.span>
-        </motion.h1>
+            </h2>
+          </motion.div>
+        )}
 
         {/* Subtitle */}
         <motion.p
