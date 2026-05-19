@@ -89,7 +89,7 @@ export default function SplashScreen({ onEnter }: SplashScreenProps) {
             WAM Visuals
           </motion.p>
 
-          {/* Slogan - Cormorant Garamond, large, wide letter-spacing, text-shimmer */}
+          {/* Slogan - Cormorant Garamond, extreme scaling, text-shimmer */}
           <motion.h1
             initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
             animate={{
@@ -98,7 +98,7 @@ export default function SplashScreen({ onEnter }: SplashScreenProps) {
               filter: 'blur(0px)',
             }}
             transition={{ duration: 1.2, delay: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className={`text-4xl md:text-6xl lg:text-7xl font-display font-light leading-[1.15] mb-6 ${
+            className={`text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-semibold leading-[1.1] mb-8 tracking-wider ${
               locale === 'zh' ? 'tracking-[0.15em]' : 'tracking-[0.2em]'
             }`}
           >

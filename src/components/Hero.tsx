@@ -162,7 +162,7 @@ export default function Hero() {
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
-          className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-semibold text-ink leading-[1.1] mb-10 tracking-wider"
+          className="text-5xl md:text-7xl lg:text-8xl font-display font-semibold text-ink leading-[1.15] mb-10"
         >
           {titleWords.map((word, wordIndex) => (
             <span key={wordIndex} className="inline-block mr-[0.15em]">
