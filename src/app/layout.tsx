@@ -36,16 +36,6 @@ export default function RootLayout({
       <body className="min-h-screen bg-cream text-ink antialiased">
         <LanguageProvider>
           <FluidBackground />
-          {/* Diamond grid overlay — blends with all layers below */}
-          <div
-            className="fixed inset-0 z-[9999] pointer-events-none"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30 Z' fill='none' stroke='%23000' stroke-width='0.5'/%3E%3C/svg%3E")`,
-              backgroundSize: '60px 60px',
-              mixBlendMode: 'multiply',
-              opacity: 0.15,
-            }}
-          />
           <Navbar />
           <main className="relative z-10">{children}</main>
           <Footer />
