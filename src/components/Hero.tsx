@@ -193,7 +193,8 @@ export default function Hero() {
               </h1>
             ) : (
               <h1
-                className="font-display font-bold text-electric/85 leading-[1.15] tracking-tighter mx-auto"
+                lang="zh"
+                className="chinese-heading font-bold text-electric/85 leading-[1.15] mx-auto"
                 style={{ fontSize: 'clamp(1.75rem, 7vw, 4rem)' }}
               >
                 {activeContent.title.split('').map((char, charIndex) => (

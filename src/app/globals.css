@@ -52,6 +52,29 @@
     font-family: var(--font-display);
   }
 
+  /* ===== Chinese Typography — "碑刻级" visual weight ===== */
+  /* Applied via :lang(zh) on any heading or .chinese-text class */
+  :lang(zh) h1,
+  :lang(zh) h2,
+  :lang(zh) h3,
+  :lang(zh) h4,
+  h1:lang(zh),
+  h2:lang(zh),
+  h3:lang(zh),
+  h4:lang(zh),
+  .chinese-heading {
+    font-family: 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  /* Slight size reduction to balance with English weight visually */
+  :lang(zh) h1,
+  h1:lang(zh),
+  .chinese-heading.h1 {
+    font-size: 0.9em;
+  }
+
   /* Calibrated heading scale — clamp() prevents 4K over-pressuring */
   h1 {
     font-weight: 700;
